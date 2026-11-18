@@ -1,0 +1,23 @@
+{
+  "name": "youtube-clone",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+     "packages/*"
+  ],
+  "scripts": {
+  "dev": "concurrently \"cd apps/web && bun run dev\" \"cd apps/api && bun run dev\"",
+  "dev:web": "cd apps/web && bun run dev",
+  "dev:api": "cd apps/api && bun run dev",
+  "build": "bun run --filter web build && bun run --filter api build",
+  "lint": "oxlint apps",
+  "lint:fix": "oxlint apps --fix",
+  "format": "oxfmt apps",
+  "format:check": "oxfmt apps --check"
+},
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "oxfmt": "^0.79.0",
+    "oxlint": "^1.94.0"
+  }
+}
