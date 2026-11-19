@@ -1,4 +1,4 @@
-import type { Video } from "../types/video";
+import type { YouTubeVideo as Video } from "@youtube-clone/shared";
 import { useNavigate } from "react-router-dom";
 import SaveVideoButton from "../components/SaveVideoButton";
 

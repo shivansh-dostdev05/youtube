@@ -40,10 +40,11 @@ export const youtubeVideoSchema = z.object({
     .optional(),
 });
 
-export type YouTubeVideo = z.infer<typeof youtubeVideoSchema>;
+export type YouTubeVideo = z.infer< typeof youtubeVideoSchema >;
 
-export const trendingVideoResponseSchema = z.array(youtubeVideoSchema);
+export const trendingVideoResponseSchema = z.object({
+  videos: z.array(youtubeVideoSchema),
+  nextPageToken: z.string().nullable()
+});
 
-export type TrendingVideoResponse = z.infer<
-  typeof trendingVideoResponseSchema
->;
+export type TrendingVideoResponse = z.infer< typeof trendingVideoResponseSchema >;

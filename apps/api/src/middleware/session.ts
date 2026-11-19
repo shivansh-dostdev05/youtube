@@ -1,4 +1,3 @@
-
 import { useSession } from "@hono/session";
 
 const sessionSecret = process.env.AUTH_SESSION_SECRET;
@@ -10,7 +9,7 @@ if (!sessionSecret) {
 export const sessionMiddleware = useSession({
   secret: sessionSecret,
   duration: {
-    absolute: 60 * 60 * 24 * 7, 
-    inactivity: 60 * 60 * 24
+    absolute: 60 * 60 * 24 * 7,
+    inactivity: 60 * 60 * 24,
   },
 });

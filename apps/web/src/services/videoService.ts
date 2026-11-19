@@ -1,9 +1,13 @@
 import api from "./api";
-import type {Video,TrendingVideoResponse} from "../types/video.ts";
+import type { YouTubeVideo as Video, TrendingVideoResponse } from "@youtube-clone/shared";
 
-export const getTrendingVideos = async (): Promise<Video[]> => {
+export const getTrendingVideos = async (pageToken?: string): Promise<TrendingVideoResponse> => {
   try {
-    const response = await api.get<TrendingVideoResponse>("/videos/trending");
+    const response = await api.get<TrendingVideoResponse>("/videos/trending", {
+      params: {
+        pageToken,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching trending videos:", error);

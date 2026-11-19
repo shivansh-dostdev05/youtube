@@ -1,12 +1,14 @@
-
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import type { SavedVideo } from "../services/myVideoService.ts";
 import { getMyVideos, removeMyVideo } from "../services/myVideoService.ts";
 
+
 export default function YourVideos() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const {
     data: videos = [],
@@ -52,9 +54,7 @@ export default function YourVideos() {
         <div className="py-20 text-center">
           <h2 className="text-xl font-semibold">No saved videos yet</h2>
 
-          <p className="mt-2 text-gray-500">
-            Save videos to find them here later.
-          </p>
+          <p className="mt-2 text-gray-500">Save videos to find them here later.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -70,23 +70,13 @@ export default function YourVideos() {
               />
 
               <div className="p-4">
-                <h2 className="line-clamp-2 font-semibold">
-                  {video.title}
-                </h2>
+                <h2 className="line-clamp-2 font-semibold">{video.title}</h2>
 
-                <p className="mt-2 text-sm text-gray-500">
-                  {video.channelTitle}
-                </p>
+                <p className="mt-2 text-sm text-gray-500">{video.channelTitle}</p>
 
                 <div className="mt-4 flex items-center justify-between">
                   <button
-                    onClick={() =>
-                      window.open(
-                        `https://www.youtube.com/watch?v=${encodeURIComponent(video.videoId)}`,
-                        "_blank",
-                        "noopener,noreferrer",
-                      )
-                    }
+                    onClick={() => navigate(`/watch/${video.videoId}`)}
                     className="rounded-full bg-red-600 px-4 py-2 text-sm text-white"
                   >
                     Watch

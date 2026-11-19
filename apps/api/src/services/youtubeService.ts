@@ -3,18 +3,22 @@ import axios from "axios";
 const YOUTUBE_URL = "https://www.googleapis.com/youtube/v3";
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 
-export const fetchTrendingVideos = async () => {
+export const fetchTrendingVideos = async (pageToken?: string) => {
   const response = await axios.get(`${YOUTUBE_URL}/videos`, {
     params: {
       part: "snippet, contentDetails, statistics",
       chart: "mostPopular",
       regionCode: "IN",
       maxResults: 20,
+      pageToken,
       key: YOUTUBE_API_KEY,
     },
   });
 
-  return response.data.items;
+  return {
+    videos: response.data.items,
+    nextPageToken: response.data.nextPageToken ?? null,
+  };
 };
 
 export const fetchVideoById = async (videoId: string) => {
@@ -26,5 +30,8 @@ export const fetchVideoById = async (videoId: string) => {
     },
   });
 
-  return response.data.items[0];
+  return {
+    videos: response.data.items[0],
+    nextPageToken: response.data.nextPageToken ?? null,
+  };
 };

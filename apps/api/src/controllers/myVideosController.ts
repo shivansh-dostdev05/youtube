@@ -1,14 +1,9 @@
-
 import type { Context } from "hono";
 import type { SessionEnv } from "@hono/session";
 
 import { saveVideoSchema } from "@youtube-clone/shared";
 
-import {
-  saveVideo,
-  getSavedVideos,
-  deleteSavedVideo,
-} from "../services/myVideosService.js";
+import { saveVideo, getSavedVideos, deleteSavedVideo } from "../services/myVideosService.js";
 
 type GoogleUser = {
   id?: string;
@@ -49,10 +44,7 @@ export const createMyVideo = async (c: Context<SessionEnv>) => {
     });
 
     if (!newVideo) {
-      return c.json(
-        { message: "Video already exists in Your Videos" },
-        409,
-      );
+      return c.json({ message: "Video already exists in Your Videos" }, 409);
     }
 
     return c.json(
@@ -63,7 +55,7 @@ export const createMyVideo = async (c: Context<SessionEnv>) => {
       201,
     );
   } catch (error) {
-    console.error("SAVE VIDEO ERROR:", error);
+    console.error("Save Video Error:", error);
 
     return c.json(
       {
@@ -89,10 +81,7 @@ export const getMyVideos = async (c: Context<SessionEnv>) => {
   } catch (error) {
     console.error("Get videos error:", error);
 
-    return c.json(
-      { message: "Failed to fetch videos" },
-      500,
-    );
+    return c.json({ message: "Failed to fetch videos" }, 500);
   }
 };
 
@@ -107,25 +96,19 @@ export const removeMyVideo = async (c: Context<SessionEnv>) => {
     const videoId = c.req.param("videoId");
 
     if (typeof videoId !== "string" || !videoId.trim()) {
-       return c.json({ message: "Invalid video ID" }, 400);
-      }
+      return c.json({ message: "Invalid video ID" }, 400);
+    }
 
-   const deletedVideo = await deleteSavedVideo(userId, videoId);
+    const deletedVideo = await deleteSavedVideo(userId, videoId);
 
     if (!deletedVideo) {
       return c.json({ message: "Video not found" }, 404);
     }
 
-    return c.json(
-      { message: "Video removed successfully" },
-      200,
-    );
+    return c.json({ message: "Video removed successfully" }, 200);
   } catch (error) {
     console.error("Delete video error:", error);
 
-    return c.json(
-      { message: "Failed to delete video" },
-      500,
-    );
+    return c.json({ message: "Failed to delete video" }, 500);
   }
 };

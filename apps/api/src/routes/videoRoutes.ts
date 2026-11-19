@@ -1,10 +1,6 @@
-
 import { Hono } from "hono";
 
-import {
-  getTrendingVideos,
-  getVideoById,
-} from "../controllers/videoController.js";
+import { getTrendingVideos, getVideoById } from "../controllers/videoController.js";
 
 const router = new Hono();
 
